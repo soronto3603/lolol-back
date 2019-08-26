@@ -1,16 +1,15 @@
 const express = require('express');
-const mysql = require('../utils/mysql');
+const mysql = require('../provider/mysql');
 const md5 = require('md5');
 const router = express.Router();
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
   res.send("invalid access.");
 });
 router.get('/create', function(req, res, next) {
   const name = req.query.name;
+  
   const hashcode = md5(name);
-  const location = "NULL";
 
   mysql.query(`INSERT INTO lolol_author(name, hashcode) VALUES("${name}", "${hashcode}")`, (error, results, fields) => {
      if (error) throw error;
@@ -30,4 +29,5 @@ router.get('/who', function(req, res, next) {
   });
   return;
 });
+
 module.exports = router;

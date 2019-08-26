@@ -1,8 +1,7 @@
 const express = require('express');
-const mysql = require('../utils/mysql');
+const mysql = require('../provider/mysql');
 const router = express.Router();
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
   mysql.query('SELECT * FROM lolol_posts', function (error, results, fields) {
     if (error) throw error;
