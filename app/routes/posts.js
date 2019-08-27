@@ -10,12 +10,15 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/insert', function(req, res, next) {
-  const {location, name, shortExpression, keywords, note, author_id} = req.body;
-
+  if (!req.body) {
+    return;
+  }
+  const {location, name, shortExpression, keywords, note, author_id} = JSON.parse(req.body);
+  
   mysql.query(`INSERT INTO lolol_posts(location, name, short_expression, keywords, note, author_id)
-   VALUES(POINT(${location.lat},${location.lng}), "${name}", "${shortExpression}", "${keywords}", "${note}", ${author_id})`, (error, results, fields) => {
+   VALUES(POINT(${location.lat},${location.lng}), "${name}", "${encodeURI(shortExpression)}", "${keywords}", "${note}", ${author_id})`, (error, results, fields) => {
      if (error) throw error;
-     res.send("succes");
+     res.send(`{"code":"success"}`);
      return;
    });
    return;
