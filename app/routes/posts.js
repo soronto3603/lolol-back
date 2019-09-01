@@ -3,7 +3,7 @@ const mysql = require('../provider/mysql');
 const router = express.Router();
 
 router.get('/', function(req, res, next) {
-  mysql.query('select *,b.name as author_name from lolol_posts left join lolol_author as b on lolol_posts.author_id = b.no;', function (error, results, fields) {
+  mysql.query('select lolol_posts.location,lolol_posts.name,lolol_posts.short_expression,lolol_posts.keywords,lolol_posts.note,b.name as author_name from lolol_posts left join lolol_author as b on lolol_posts.author_id = b.no;', function (error, results, fields) {
     if (error) throw error;
     res.send(results);
   });
